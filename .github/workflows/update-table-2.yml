@@ -2,7 +2,7 @@ name: Update Schachtabelle 2. Mannschaft
 
 on:
   schedule:
-    - cron: '0 7 * * *'  # Jeden Tag um 7 Uhr UTC
+    - cron: '10 6 * * *'  # täglich um 6:10 UTC
   workflow_dispatch:
 
 jobs:
@@ -32,4 +32,4 @@ jobs:
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
           git add bettringen2.html || true
           git commit -m "Automatisch aktualisiert: Tabelle 2. Mannschaft" || echo "Nichts zu committen"
-          git push || echo "Push fehlgeschlagen"
+          git push || echo "Push fehlgeschlagen (evtl. keine Änderung)"
