@@ -1,13 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
 
+# URL der nuLiga-Tabelle der 2. Mannschaft
 url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/groupPage?championship=Ostalb+24%2F25&group=1181"
+
+# Tabelle abrufen
 response = requests.get(url)
 response.encoding = 'utf-8'
-
 soup = BeautifulSoup(response.text, 'html.parser')
+
+# Tabelle finden
 table = soup.find('table')
 
+# Links entfernen
 for a in table.find_all('a'):
     a.replace_with(a.get_text())
 
@@ -16,6 +21,7 @@ for row in table.find_all('tr'):
     if 'SG Bettringen' in row.get_text():
         row['style'] = 'background-color: #c3fdff; font-weight: bold;'  # hellblau
 
+# HTML-Dokument aufbauen
 html_content = f"""
 <!DOCTYPE html>
 <html lang="de">
@@ -56,5 +62,9 @@ html_content = f"""
 </html>
 """
 
+# Datei speichern
 with open("bettringen2.html", "w", encoding="utf-8") as f:
     f.write(html_content)
+
+print("✅ bettringen2.html wurde erfolgreich erzeugt.")
+
