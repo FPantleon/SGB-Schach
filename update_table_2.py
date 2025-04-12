@@ -14,7 +14,7 @@ for a in table.find_all('a'):
 # SG Bettringen 2 hervorheben
 for row in table.find_all('tr'):
     if 'SG Bettringen' in row.get_text():
-        row['style'] = 'background-color: #c3fdff; font-weight: bold;'  # leichtes Blau
+        row['style'] = 'background-color: #c3fdff; font-weight: bold;'  # hellblau
 
 html_content = f"""
 <!DOCTYPE html>
