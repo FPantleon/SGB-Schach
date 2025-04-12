@@ -1,0 +1,35 @@
+name: Update Schachtabelle 2. Mannschaft
+
+on:
+  schedule:
+    - cron: '0 7 * * *'  # Jeden Tag um 7 Uhr UTC
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v3
+
+      - name: Python installieren
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Abhängigkeiten installieren
+        run: pip install requests beautifulsoup4
+
+      - name: Tabelle generieren
+        run: python update_table_2.py
+
+      - name: Geänderte Datei pushen
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
+          git add bettringen2.html || true
+          git commit -m "Automatisch aktualisiert: Tabelle 2. Mannschaft" || echo "Nichts zu committen"
+          git push || echo "Push fehlgeschlagen"
