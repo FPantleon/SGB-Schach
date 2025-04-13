@@ -33,3 +33,4 @@ jobs:
           git add bettringen2.html || true
           git commit -m "Automatisch aktualisiert: Tabelle 2. Mannschaft" || echo "Nichts zu committen"
           git push || echo "Push fehlgeschlagen (evtl. keine Änderung)"
+
