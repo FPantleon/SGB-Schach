@@ -32,5 +32,10 @@ jobs:
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
           git add bettringen2.html || true
           git commit -m "Automatisch aktualisiert: Tabelle 2. Mannschaft" || echo "Nichts zu committen"
+          - name: Token-Test (Debug-Ausgabe)
+  run: echo "🔐 GH_TOKEN Länge: ${#GH_TOKEN}"
+  env:
+    GH_TOKEN: ${{ secrets.GH_TOKEN1 }}
+
           git push || echo "Push fehlgeschlagen (evtl. keine Änderung)"
 
