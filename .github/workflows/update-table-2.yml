@@ -2,7 +2,7 @@ name: Update Schachtabelle 2. Mannschaft
 
 on:
   schedule:
-    - cron: '10 6 * * *'  # täglich um 6:10 UTC
+    - cron: '10 6 * * *'  # täglich um 6:10 Uhr (UTC)
   workflow_dispatch:
 
 jobs:
