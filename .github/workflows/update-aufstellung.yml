@@ -1,0 +1,35 @@
+name: Update Mannschaftsaufstellung
+
+on:
+  schedule:
+    - cron: '15 6 * * *'  # täglich um 06:15 UTC
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo auschecken
+        uses: actions/checkout@v3
+
+      - name: Python installieren
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Abhängigkeiten installieren
+        run: pip install requests beautifulsoup4
+
+      - name: Aufstellung generieren
+        run: python update_aufstellung.py
+
+      - name: Datei pushen
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN1 }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
+          git add aufstellung.html || true
+          git commit -m "Automatisch aktualisiert: Mannschaftsaufstellung" || echo "Nichts zu committen"
+          git push || echo "Push fehlgeschlagen (evtl. keine Änderung)"
