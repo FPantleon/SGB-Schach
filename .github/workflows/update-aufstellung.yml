@@ -2,8 +2,8 @@ name: Update Mannschaftsaufstellung
 
 on:
   schedule:
-    - cron: '15 6 * * *'  # Täglich um 06:15 UTC (07:15 MEZ)
-  workflow_dispatch:       # Manuell über GitHub startbar
+    - cron: '15 6 * * *'  # Täglich um 06:15 UTC
+  workflow_dispatch:
 
 jobs:
   build:
@@ -27,12 +27,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
+          echo "✅ Token-Test: Länge = ${#GH_TOKEN}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
           git add aufstellung.html || true
           git commit -m "Automatisch aktualisiert: Mannschaftsaufstellung" || echo "Nichts zu committen"
-          git push || echo "Push fehlgeschlagen (evtl. keine Änderung)"
+          git push || echo "❌ Push fehlgeschlagen"
 
           git add aufstellung.html || true
           git commit -m "Automatisch aktualisiert: Mannschaftsaufstellung" || echo "Nichts zu committen"
