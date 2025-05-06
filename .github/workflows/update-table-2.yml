@@ -2,7 +2,7 @@ name: Update Schachtabelle 2. Mannschaft
 
 on:
   schedule:
-    - cron: '10 6 * * *'  # täglich um 6:10 Uhr (UTC)
+    - cron: '20 6 * * *'  # Täglich um 06:20 UTC (07:20 deutsche Zeit)
   workflow_dispatch:
 
 jobs:
@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Repository auschecken
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Python installieren
         uses: actions/setup-python@v4
@@ -25,17 +27,12 @@ jobs:
 
       - name: Geänderte Datei pushen
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN1 }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
+          echo "✅ Token-Test: Länge = ${#GH_TOKEN}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
           git add bettringen2.html || true
           git commit -m "Automatisch aktualisiert: Tabelle 2. Mannschaft" || echo "Nichts zu committen"
-          - name: Token-Test (Debug-Ausgabe)
-  run: echo "🔐 GH_TOKEN Länge: ${#GH_TOKEN}"
-  env:
-    GH_TOKEN: ${{ secrets.GH_TOKEN1 }}
-
-          git push || echo "Push fehlgeschlagen (evtl. keine Änderung)"
+          git push origin main || echo "❌ Push fehlgeschlagen"
 
