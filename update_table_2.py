@@ -17,10 +17,19 @@ for a in table.find_all('a'):
     a.replace_with(a.get_text())
 
 # SG Bettringen hervorheben
-for row in table.find_all('tr'):
-    if 'SG Bettringen' in row.get_text():
-        row['style'] = 'background-color: #c3fdff; font-weight: bold;'  # hellblau
+for row in table.find_all("tr")[1:]:
+    cols = row.find_all("td")
+    if not cols:
+        continue
 
+    # Spalten 1 bis N überspringen die erste leere Spalte (Index 0)
+    relevante_spalten = cols[1:]  # Index 1 bis Ende
+
+    # Dann z. B. weiter mit:
+    html += "<tr>\n"
+    for col in relevante_spalten:
+        html += f"  <td>{col.get_text(strip=True)}</td>\n"
+    html += "</tr>\n"
 # HTML-Seite erzeugen
 html_content = f"""
 <!DOCTYPE html>
