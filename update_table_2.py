@@ -37,7 +37,7 @@ for row in table.find_all("tr")[1:]:
 
     # Hervorhebung
     if "SG Bettringen 2" in verein_name:
-        html += '  <tr style="font-weight: bold; background-color: #ffff66;">\n'
+        html += '  <tr style="font-weight: bold; background-color: #ffeb3b;">\n'
     else:
         html += "  <tr>\n"
 
