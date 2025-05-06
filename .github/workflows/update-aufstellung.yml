@@ -33,3 +33,7 @@ jobs:
           git add aufstellung.html || true
           git commit -m "Automatisch aktualisiert: Mannschaftsaufstellung" || echo "Nichts zu committen"
           git push || echo "Push fehlgeschlagen (evtl. keine Änderung)"
+
+          git add aufstellung.html || true
+          git commit -m "Automatisch aktualisiert: Mannschaftsaufstellung" || echo "Nichts zu committen"
+          git push || echo "Push fehlgeschlagen (evtl. keine Änderung)"
