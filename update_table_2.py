@@ -16,20 +16,37 @@ if not table:
 for a in table.find_all('a'):
     a.replace_with(a.get_text())
 
+# Neue HTML-Tabelle erzeugen (ohne erste Spalte)
+html = "<table>\n"
+
+# Tabellenkopf übernehmen
+headers = table.find_all("tr")[0].find_all("th")
+html += "  <tr>\n"
+for th in headers[1:]:  # Erste Spalte überspringen
+    html += f"    <th>{th.get_text(strip=True)}</th>\n"
+html += "  </tr>\n"
+
 # SG Bettringen hervorheben
 for row in table.find_all("tr")[1:]:
     cols = row.find_all("td")
     if not cols:
         continue
 
-    # Spalten 1 bis N überspringen die erste leere Spalte (Index 0)
-    relevante_spalten = cols[1:]  # Index 1 bis Ende
+    relevante_spalten = cols[1:]  # Erste Spalte überspringen
+    verein_name = relevante_spalten[0].get_text(strip=True)
 
-    # Dann z. B. weiter mit:
-    html += "<tr>\n"
+    # Hervorhebung
+    if "Bettringen" in verein_name:
+        html += '  <tr style="font-weight: bold; background-color: #ffffcc;">\n'
+    else:
+        html += "  <tr>\n"
+
     for col in relevante_spalten:
-        html += f"  <td>{col.get_text(strip=True)}</td>\n"
-    html += "</tr>\n"
+        html += f"    <td>{col.get_text(strip=True)}</td>\n"
+    html += "  </tr>\n"
+
+html += "</table>"
+
 # HTML-Seite erzeugen
 html_content = f"""
 <!DOCTYPE html>
@@ -66,7 +83,7 @@ html_content = f"""
 </head>
 <body>
   <h1>SG Bettringen 2 – Bezirksklasse Ostalb Ost 2024/25</h1>
-  {str(table)}
+  {html}
 </body>
 </html>
 """
