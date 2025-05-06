@@ -2,7 +2,7 @@ name: Update Mannschaftsaufstellung
 
 on:
   schedule:
-    - cron: '15 6 * * *'  # täglich um 06:15 UTC
+    - cron: '15 6 * * *'  # Täglich um 06:15 UTC
   workflow_dispatch:
 
 jobs:
@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Repository auschecken
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Python installieren
         uses: actions/setup-python@v4
@@ -24,12 +26,12 @@ jobs:
         run: python update_aufstellung.py
 
       - name: Geänderte Datei pushen
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           echo "✅ Token-Test: Länge = ${#GH_TOKEN}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add aufstellung.html || true
           git commit -m "Automatisch aktualisiert: Mannschaftsaufstellung" || echo "Nichts zu committen"
-          git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} HEAD:main || echo "❌ Push fehlgeschlagen"
+          git push origin main || echo "❌ Push fehlgeschlagen"
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
