@@ -2,7 +2,7 @@ name: Update Mannschaftsaufstellung
 
 on:
   schedule:
-    - cron: '15 6 * * *'  # Täglich um 06:15 UTC
+    - cron: '15 6 * * *'  # Täglich um 06:15 UTC (07:15 MEZ)
   workflow_dispatch:       # Manuell über GitHub startbar
 
 jobs:
@@ -25,11 +25,11 @@ jobs:
 
       - name: Geänderte Datei pushen
         env:
-          GH_TOKEN1: ${{ secrets.GH_TOKEN1 }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${GH_TOKEN1}@github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
           git add aufstellung.html || true
           git commit -m "Automatisch aktualisiert: Mannschaftsaufstellung" || echo "Nichts zu committen"
           git push || echo "Push fehlgeschlagen (evtl. keine Änderung)"
