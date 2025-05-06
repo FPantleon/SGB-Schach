@@ -2,14 +2,14 @@ name: Update Mannschaftsaufstellung
 
 on:
   schedule:
-    - cron: '15 6 * * *'  # täglich um 06:15 UTC
-  workflow_dispatch:
+    - cron: '15 6 * * *'  # Täglich um 06:15 UTC (07:15 deutsche Zeit)
+  workflow_dispatch:       # Manuell über GitHub auslösbar
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Repo auschecken
+      - name: Repository auschecken
         uses: actions/checkout@v3
 
       - name: Python installieren
@@ -23,7 +23,7 @@ jobs:
       - name: Aufstellung generieren
         run: python update_aufstellung.py
 
-      - name: Datei pushen
+      - name: Geänderte Datei pushen
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN1 }}
         run: |
