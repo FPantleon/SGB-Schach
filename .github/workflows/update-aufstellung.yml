@@ -2,8 +2,8 @@ name: Update Mannschaftsaufstellung
 
 on:
   schedule:
-    - cron: '15 6 * * *'  # Täglich um 06:15 UTC (07:15 deutsche Zeit)
-  workflow_dispatch:       # Manuell über GitHub startbar
+    - cron: '15 6 * * *'  # Täglich um 06:15 UTC
+  workflow_dispatch:
 
 jobs:
   build:
@@ -32,6 +32,10 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git remote remove origin
           git remote add origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
+          git add aufstellung.html || true
+          git commit -m "Automatisch aktualisiert: Mannschaftsaufstellung" || echo "Nichts zu committen"
+          git push --set-upstream origin main || echo "❌ Push fehlgeschlagen"
+
           git add aufstellung.html || true
           git commit -m "Automatisch aktualisiert: Mannschaftsaufstellung" || echo "Nichts zu committen"
           git push || echo "❌ Push fehlgeschlagen"
