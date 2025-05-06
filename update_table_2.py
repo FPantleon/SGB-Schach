@@ -36,7 +36,7 @@ for row in table.find_all("tr")[1:]:
     verein_name = relevante_spalten[1].get_text(strip=True)
 
     # Hervorhebung
-    if "bettringen" in verein_name:
+    if "SG Bettringen 2" in verein_name:
         html += '  <tr style="font-weight: bold; background-color: #ffff66;">\n'
     else:
         html += "  <tr>\n"
