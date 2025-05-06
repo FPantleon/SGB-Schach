@@ -56,7 +56,7 @@ html_content = f"""
   </style>
 </head>
 <body>
-  <h1>Bezirksklasse Ostalb West 2024/25 – Tabelle (automatisch)</h1>
+  <h1>Bezirksklasse Ostalb West 2024/25 – Tabelle</h1>
   {str(table)}
 </body>
 </html>
