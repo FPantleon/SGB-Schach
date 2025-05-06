@@ -33,7 +33,7 @@ for row in table.find_all("tr")[1:]:
         continue
 
     relevante_spalten = cols[1:]  # Erste Spalte überspringen
-    verein_name = relevante_spalten[0].get_text(strip=True)
+    verein_name = relevante_spalten[1].get_text(strip=True)
 
     # Hervorhebung
     if "bettringen" in verein_name:
