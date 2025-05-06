@@ -4,12 +4,20 @@ from bs4 import BeautifulSoup
 # URL zur Mannschaftsaufstellung
 url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/teamPortrait?teamtable=1809461&pageState=vorrunde&championship=Ostalb+24%2F25&group=990"
 
-response = requests.get(url)
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+}
+response = requests.get(url, headers=headers)
+print(response.status_code)
+print(response.text[:1000])  # gib den Anfang des HTML aus
 response.encoding = 'utf-8'
 soup = BeautifulSoup(response.text, 'html.parser')
 
 # Tabelle finden
-table = soup.find('table', class_='standard')
+tables = soup.find_all('table')
+if len(tables) < 3:
+    raise Exception("❌ Nicht genügend Tabellen auf der Seite gefunden.")
+table = tables[2]
 if not table:
     raise Exception("❌ Mannschaftstabelle nicht gefunden.")
 
@@ -45,14 +53,14 @@ html_content = """
 """
 
 # Zeilen extrahieren
-for row in rows:
+for row in table.find_all('tr')[1:]:
     cols = row.find_all('td')
-    if len(cols) >= 5:
+    if len(cols) >= 6:  # sicherstellen, dass genug Spalten vorhanden sind
         brett = cols[0].text.strip()
-        name = cols[1].get_text(strip=True)  # Link entfernen
-        dwz = cols[2].text.strip()
-        einsaetze = cols[3].text.strip()
-        punkte = cols[4].text.strip()
+        name = cols[1].get_text(strip=True)
+        dwz = cols[3].text.strip()
+        einsaetze = cols[4].text.strip()
+        punkte = cols[5].text.strip()
 
         html_content += f"""
     <tr>
@@ -63,6 +71,7 @@ for row in rows:
       <td>{punkte}</td>
     </tr>
 """
+
 
 html_content += """
   </table>
