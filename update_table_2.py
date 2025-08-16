@@ -4,16 +4,16 @@ from bs4 import BeautifulSoup
 # URL zur Tabelle der 2. Mannschaft
 url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/groupPage?championship=Ostalb+24%2F25&group=1181"
 response = requests.get(url)
-response.encoding = 'utf-8'
-soup = BeautifulSoup(response.text, 'html.parser')
+response.encoding = "utf-8"
+soup = BeautifulSoup(response.text, "html.parser")
 
 # Tabelle finden
-table = soup.find('table')
+table = soup.find("table")
 if not table:
     raise Exception("❌ Tabelle nicht gefunden!")
 
 # Alle Links entfernen
-for a in table.find_all('a'):
+for a in table.find_all("a"):
     a.replace_with(a.get_text())
 
 # Neue HTML-Tabelle erzeugen
@@ -36,7 +36,9 @@ for row in table.find_all("tr")[1:]:
         continue
 
     relevante_spalten = cols[1:]  # erste (leere) Spalte entfernen
-    verein_name = relevante_spalten[1].get_text(strip=True).lower()  # Spalte 1 = Mannschaft
+    verein_name = (
+        relevante_spalten[1].get_text(strip=True).lower()
+    )  # Spalte 1 = Mannschaft
 
     if "bettringen" in verein_name:
         html += '  <tr style="font-weight: bold; background-color: #ffeb3b;">\n'
@@ -95,4 +97,3 @@ with open("bettringen2.html", "w", encoding="utf-8") as f:
     f.write(html_content)
 
 print("✅ bettringen2.html erfolgreich erstellt.")
-

@@ -4,22 +4,22 @@ from bs4 import BeautifulSoup
 # URL der nuLiga-Tabelle
 url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/groupPage?championship=Ostalb+24%2F25&group=990"
 response = requests.get(url)
-response.encoding = 'utf-8'
+response.encoding = "utf-8"
 
 # HTML parsen
-soup = BeautifulSoup(response.text, 'html.parser')
+soup = BeautifulSoup(response.text, "html.parser")
 
 # Tabelle finden (erste mit class 'result' oder einfach erste große Tabelle)
-table = soup.find('table')
+table = soup.find("table")
 
 # Alle Links aus der Tabelle entfernen
-for a in table.find_all('a'):
+for a in table.find_all("a"):
     a.replace_with(a.get_text())
 
 # SG Bettringen hervorheben
-for row in table.find_all('tr'):
-    if 'SG Bettringen' in row.get_text():
-        row['style'] = 'background-color: #ffeb3b; font-weight: bold;'
+for row in table.find_all("tr"):
+    if "SG Bettringen" in row.get_text():
+        row["style"] = "background-color: #ffeb3b; font-weight: bold;"
 
 # HTML-Vorlage bauen
 html_content = f"""
