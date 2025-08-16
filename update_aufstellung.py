@@ -4,17 +4,15 @@ from bs4 import BeautifulSoup
 # URL zur Mannschaftsaufstellung
 url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/teamPortrait?teamtable=1809461&pageState=vorrunde&championship=Ostalb+24%2F25&group=990"
 
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-}
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 response = requests.get(url, headers=headers)
 print(response.status_code)
 print(response.text[:1000])  # gib den Anfang des HTML aus
-response.encoding = 'utf-8'
-soup = BeautifulSoup(response.text, 'html.parser')
+response.encoding = "utf-8"
+soup = BeautifulSoup(response.text, "html.parser")
 
 # Tabelle finden
-tables = soup.find_all('table')
+tables = soup.find_all("table")
 if len(tables) < 3:
     raise Exception("❌ Nicht genügend Tabellen auf der Seite gefunden.")
 table = tables[2]
@@ -22,7 +20,7 @@ if not table:
     raise Exception("❌ Mannschaftstabelle nicht gefunden.")
 
 # Alle Zeilen holen (ohne Tabellenkopf)
-rows = table.find_all('tr')[1:]  # erste Zeile ist Kopf
+rows = table.find_all("tr")[1:]  # erste Zeile ist Kopf
 
 # HTML-Grundgerüst
 html_content = """
@@ -53,8 +51,8 @@ html_content = """
 """
 
 # Zeilen extrahieren
-for row in table.find_all('tr')[1:]:
-    cols = row.find_all('td')
+for row in table.find_all("tr")[1:]:
+    cols = row.find_all("td")
     if len(cols) >= 6:  # sicherstellen, dass genug Spalten vorhanden sind
         brett = cols[0].text.strip()
         name = cols[1].get_text(strip=True)
