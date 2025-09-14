@@ -26,7 +26,7 @@ jobs:
         run: python update_table_2.py
 
       - name: Geänderte Datei pushen
-        run: 
+        run: |
           git config --global user.name "FPantleon"
           git config --global user.email "florian.pantleon@outlook.de"
           git add bettringen2.html || true
