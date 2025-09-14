@@ -84,7 +84,7 @@ html_content = f"""
   </style>
 </head>
 <body>
-  <h1>A-Klasse Schwäbisch Gmünd 2024/25 – Tabelle</h1>
+  <h1>A-Klasse Schwäbisch Gmünd 2025/26 – Tabelle</h1>
   {html}
 </body>
 </html>
