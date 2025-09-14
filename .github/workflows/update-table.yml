@@ -2,15 +2,17 @@ name: Update Schachtabelle
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Jeden Tag um 6 Uhr UTC
-  workflow_dispatch:      # Manuell auslösbar
+    - cron: '0 6 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Repository auschecken
+      - name: Repository auschecken mit Token
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Python installieren
         uses: actions/setup-python@v4
@@ -24,14 +26,9 @@ jobs:
         run: python update_table.py
 
       - name: Geänderte Datei pushen
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Stelle sicher, dass dein Secret so heißt!
         run: |
-          echo "✅ Token-Test: Länge = ${#GH_TOKEN}"
           git config --global user.name "FPantleon"
           git config --global user.email "florian.pantleon@outlook.de"
-          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
           git add index.html || true
           git commit -m "Automatisch aktualisiert: Tabelle" || echo "Nichts zu committen"
           git push origin main || echo "❌ Push fehlgeschlagen"
-
