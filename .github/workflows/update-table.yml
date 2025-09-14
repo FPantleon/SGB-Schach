@@ -2,8 +2,8 @@ name: Update Schachtabelle
 
 on:
   schedule:
-    - cron: '0 6 * * *' # Jeden Tag um 6 Uhr morgens (UTC)
-  workflow_dispatch: # Manuell auslösbar
+    - cron: '0 6 * * *'  # Jeden Tag um 6 Uhr UTC
+  workflow_dispatch:      # Manuell auslösbar
 
 jobs:
   build:
@@ -25,11 +25,13 @@ jobs:
 
       - name: Geänderte Datei pushen
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Stelle sicher, dass dein Secret so heißt!
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          echo "✅ Token-Test: Länge = ${#GH_TOKEN}"
+          git config --global user.name "AutoPush"
+          git config --global user.email "autopush@example.com"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
           git add index.html || true
           git commit -m "Automatisch aktualisiert: Tabelle" || echo "Nichts zu committen"
-          git push || echo "Push fehlgeschlagen (evtl. keine Änderung)"
+          git push origin main || echo "❌ Push fehlgeschlagen"
+
