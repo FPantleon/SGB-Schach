@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # URL der nuLiga-Tabelle
-url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/groupPage?championship=Ostalb+24%2F25&group=990"
+url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/groupPage?championship=Ostalb+25%2F26&group=4209"
 response = requests.get(url)
 response.encoding = 'utf-8'
 
