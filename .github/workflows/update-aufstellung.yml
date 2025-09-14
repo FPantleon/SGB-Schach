@@ -28,8 +28,8 @@ jobs:
       - name: Geänderte Datei pushen
         run: |
           echo "✅ Token-Test: Länge = ${#GH_TOKEN}"
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "FPantleon"
+          git config --global user.email "florian.pantleon@outlook.de"
           git add aufstellung.html || true
           git commit -m "Automatisch aktualisiert: Mannschaftsaufstellung" || echo "Nichts zu committen"
           git push origin main || echo "❌ Push fehlgeschlagen"
