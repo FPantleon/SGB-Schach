@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # URL zur Tabelle der 2. Mannschaft
-url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/groupPage?championship=Ostalb+24%2F25&group=1181"
+url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/groupPage?championship=Ostalb+25%2F26&group=4186"
 response = requests.get(url)
 response.encoding = 'utf-8'
 soup = BeautifulSoup(response.text, 'html.parser')
