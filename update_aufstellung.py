@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # URL zur Mannschaftsaufstellung
-url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/teamPortrait?teamtable=1809461&pageState=vorrunde&championship=Ostalb+24%2F25&group=990"
+url = "https://svw-schach.liga.nu/cgi-bin/WebObjects/nuLigaSCHACHDE.woa/wa/teamPortrait?teamtable=1815599&pageState=vorrunde&championship=Ostalb+25%2F26&group=4209"
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
