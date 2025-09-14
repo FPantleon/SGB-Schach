@@ -28,8 +28,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Stelle sicher, dass dein Secret so heißt!
         run: |
           echo "✅ Token-Test: Länge = ${#GH_TOKEN}"
-          git config --global user.name "AutoPush"
-          git config --global user.email "autopush@example.com"
+          git config --global user.name "FPantleon"
+          git config --global user.email "florian.pantleon@outlook.de"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
           git add index.html || true
           git commit -m "Automatisch aktualisiert: Tabelle" || echo "Nichts zu committen"
